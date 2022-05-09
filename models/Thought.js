@@ -1,5 +1,28 @@
 const { Schema, model, Types } = require('mongoose');
 
+const ReactionSchema = new Schema(
+    {
+    rectionId: {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId()
+    },
+    reactionBody: {
+        type: String,
+        require: true,
+        max: 280
+    },
+    username: {
+        type: String,
+        require: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: date => date.toDateString()
+    }
+    }
+);
+
 const ThougthSchema = new Schema(
     {
     thoughtText: {
@@ -28,28 +51,7 @@ const ThougthSchema = new Schema(
     }
 );
 
-const ReactionSchema = new Schema(
-    {
-    rectionId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId()
-    },
-    reactionBody: {
-        type: String,
-        require: true,
-        max: 280
-    },
-    username: {
-        type: String,
-        require: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        get: date => date.toDateString()
-    }
-    }
-);
+
 
 ThougthSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
